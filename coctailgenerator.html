@@ -1,0 +1,1274 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<title> Food website </title>
+		
+		<style>
+			html, body{
+				margin: 0px;
+				padding: 0px;
+			}
+
+			html{
+				height: 100%;
+			}
+
+			body{
+				height: auto;
+			}
+
+			label.form-check-label {
+    			font-size: large;
+			}
+
+			.checkbox-container {
+				display: flex;
+				flex-direction: row;
+				overflow-y: auto;
+				overflow-x: scroll;
+				width: inherit;
+
+				/*
+					min-width: 576px;
+					max-width: 576;
+				*/
+				
+			}
+
+			.form-check.form-check-inline {
+				margin-left: 2%;
+			}
+
+			.form-row {
+				width: 100%;
+				margin-bottom: 5%;
+			}
+
+			.orientimi-konteinerave{
+				display: flex;
+				flex-direction: column;
+			}
+
+			.img-fluid {
+				max-width: 100%;
+				height: 100% !important;;
+				/*height: fit-content !important;*/
+			}
+
+			.card {
+				margin-bottom: 5%;
+			}
+
+			li.list-group-item {
+				color: black;
+			}
+
+			.mydivider{
+				width: 90%;
+			}
+
+			.extra-info{
+				display: flex;
+				flex-direction: row !important;
+				
+			}
+
+			.my-li-item{
+				border: 0px !important;
+			}
+
+
+			::placeholder {
+				color: #28a745!important;
+				opacity: 1; /* Firefox */
+			}
+
+			:-ms-input-placeholder { /* Internet Explorer 10-11 */
+				color: #28a745!important;
+			}
+
+			::-ms-input-placeholder { /* Microsoft Edge */
+				color: #28a745!important;
+			}
+
+            div#incomeDataContainer {
+                min-height: 12rem;
+            }
+
+			li.list-group-item.clearfix {
+				width: fit-content;
+				background: transparent;
+    			color: #28a745;
+			}
+
+			img.img-fluid {
+				width: 90%;
+			}
+
+
+			/*
+				media query per 
+				screen width less than 576px
+			*/
+
+		</style>
+
+  
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+			
+
+  	</head>
+    <body >
+
+		<!-- fillon navbar -->
+		<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+			<a class="navbar-brand" href="#">Navbar</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+			  <span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="collapsibleNavbar">
+			  <ul class="navbar-nav">
+
+				<li class="nav-item">
+					<a class="nav-link" href="winerecomandation.html"> Wine Recomandation </a>
+				  </li>
+				  <li class="nav-item">
+					<a class="nav-link" href="mealplangenerator.html"> Generate Meal Plan </a>
+				  </li>
+				  <li class="nav-item">
+					<a class="nav-link" href="index.html"> Home </a>
+				  </li>    
+				  <li class="nav-item">
+					  <a class="nav-link" href="fooddatagenerator.html"> Generate Food Data </a>
+				  </li> 
+				  <li class="nav-item">
+					  <a class="nav-link" href="coctailgenerator.html"> Generate Coctail </a>
+				  </li> 
+					<li class="nav-item">
+					  <a class="nav-link" href="about.html"> About </a>
+				  </li> 
+
+			  </ul>
+			</div>  
+		</nav>
+
+		<!-- mbaron navbar -->
+
+
+
+		<h1 class="display-1 text-center text-warning pt-5 pb-5 " > Cocktails </h1>
+        
+        
+		<div class="container bg-light pt-5 pb-3 ">
+			    
+            <div class="row" >
+                <div class="col-5 mb-1 ml-3 " >
+                    <div class="form-group">
+                        <input type="text" class="form-control-range" id="cocbyname" placeholder="Cocktail by name" >
+                    </div>
+                </div>
+    
+                <div class="col-5 mb-1 ml-3 " >
+                    <div class="form-group">
+                        <button class="btn btn-success" onclick="cocbyname()" > Search </button>
+                    </div>
+                </div>
+    
+            </div>
+
+            <div class="row" >
+                <div class="col-5 mb-1 ml-3 " >
+                    <div class="form-group">
+                        <input type="text" class="form-control-range" id="cocfirstlett" placeholder="Cocktails by first letter" >
+                    </div>
+                </div>
+    
+                <div class="col-5 mb-1 ml-3" >
+                    <div class="form-group">
+                        <button class="btn btn-success" onclick="cocfirstlett()" > Search </button>
+                    </div>
+                </div>
+    
+            </div>
+
+            <div class="row " >
+                <div class="col-5 mb-1 ml-3" >
+                    <div class="form-group">
+                        <input type="text" class="form-control-range" id="ingnam" placeholder="Ingredient by name" >
+                    </div>
+                </div>
+
+                <div class="col-5 mb-1 ml-3" >
+                    <div class="form-group">
+                        <button class="btn btn-success " onclick="ingnam()" > Search </button>
+                    </div>
+                </div>
+
+            </div>
+
+            
+        </div>
+
+
+		<div class="container mt-auto mb-5 bg-light">
+			<div class="row align-items-end" >
+
+                
+				<div class="col-sm-1 order-last">
+					
+                    <ul class="list-group list-group-flush ml-3 ">
+                        <li class="list-group-item clearfix " onclick="alc()" > Alcoholic Cocktails </li>
+                        <li class="list-group-item clearfix " onclick="nonalc()" > Non Alcoholic Cocktails </li>
+
+                    </ul>
+                
+                </div>
+				
+			</div>
+		</div>
+
+
+
+
+		<!-- Kontenieri ku vendeset artikulli 
+		<div  id="recipeArticleContainer">
+
+
+		</div>
+
+		-->
+
+
+		<!-- Kontenieri kuvendosen lista me receta -->
+		<div class="container" id="incomeDataContainer">
+
+			<p style="text-align: center;">
+				No Data Yet!
+			</p>
+
+		</div>
+
+
+        <!--  Footer -->
+
+		<footer  data-rv-view="8793">
+
+    
+
+			<div class=" bg-dark text-light ">
+				<div class="media-container-row">
+					<div class="col-md-3">
+						<div class="media-wrap">
+							<span> Recipe </span>
+						</div>
+					</div>
+					<div class="col-md-9">
+						<p class="mbr-text align-right links mbr-fonts-style display-7">
+							<a href="#" class="text-black">ABOUT</a> &nbsp;&nbsp;&nbsp;&nbsp;
+							<a href="#" class="text-black">TERMS</a> &nbsp;&nbsp;&nbsp;&nbsp;
+							<a href="#" class="text-black">CAREERS</a> &nbsp;&nbsp;&nbsp;&nbsp;
+							<a href="#" class="text-black">CONTACT</a>
+						</p>
+					</div>
+				</div>
+				<div class="footer-lower">
+					<div class="media-container-row">
+						<div class="col-md-12">
+							<hr class="bg-success">
+						</div>
+					</div>
+					<div class="media-container-row mbr-white">
+						<div class="col-md-6 copyright">
+							<p class="mbr-text mbr-fonts-style display-7">
+								© Copyright 2018 Footer Template- All Rights Reserved
+							</p>
+						</div>
+						
+					</div>
+				</div>
+			</div>
+		
+		
+		
+		
+		</footer>  <!-- End  Footer -->
+
+
+
+		<script>
+
+			let alc = (  ) => {
+				
+				let fullQuery = 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?a=Alcoholic' ;
+
+				axios.get(fullQuery)
+				.then(function (res) {
+                    console.log(res.data);
+                    
+					let dataToShow = '' ;
+
+                    for( let pije of res.data.drinks ){
+                        
+						dataToShow = dataToShow + '<div class="card shadow " > <div class="row no-gutters"> <div class="col-sm-4"> ' ;
+						dataToShow = dataToShow + '<img class="img-fluid" src="' + pije.strDrinkThumb + '" alt="...">' ;
+						dataToShow = dataToShow + '</div> <div class="col-sm-8"> <div class="card-body">' ;
+						dataToShow = dataToShow + '<h5 class="card-title">' + pije.strDrink + '</h5>';
+						dataToShow = dataToShow + '<p class="card-text">' +  pije.strInstructions + '</p>';
+						
+
+						dataToShow = dataToShow + '<div class="card-body">' ;
+
+						if( pije.strAlcoholic != null ){
+							dataToShow = dataToShow + ' <span class="badge badge-primary">' + pije.strAlcoholic + ' </span> ' ;
+						}
+
+						if( pije.strCategory != null ){
+							dataToShow = dataToShow + ' <span class="badge badge-primary"> ' + pije.strCategory + ' </span> ' ;
+						}
+							
+						if( pije.strGlass != null ){
+							dataToShow = dataToShow + ' <span class="badge badge-primary"> ' + pije.strGlass + ' </span> ' ;
+						}
+						dataToShow = dataToShow + '</div>' ;
+
+
+
+						dataToShow = dataToShow + '<ul class="list-group">' ;
+
+						if( pije.strIngredient1 != null ){
+							dataToShow = dataToShow + '<li class="list-group-item d-flex justify-content-between align-items-center"> ' + pije.strIngredient1 ;
+							
+							if( pije.strMeasure1 != null ){ 
+								dataToShow = dataToShow + '<span class="badge badge-primary badge-pill"> ' + pije.strMeasure1 + ' </span>' ;
+							} 
+							dataToShow = dataToShow + '</li>';
+						}
+
+						if( pije.strIngredient2 != null ){
+							dataToShow = dataToShow + '<li class="list-group-item d-flex justify-content-between align-items-center"> ' + pije.strIngredient2 ;
+							
+							if( pije.strMeasure2 != null ){ 
+								dataToShow = dataToShow + '<span class="badge badge-primary badge-pill"> ' + pije.strMeasure2 + ' </span>' ;
+							} 
+							dataToShow = dataToShow + '</li>';
+						}
+
+						if( pije.strIngredient3 != null ){
+							dataToShow = dataToShow + '<li class="list-group-item d-flex justify-content-between align-items-center"> ' + pije.strIngredient3 ;
+							
+							if( pije.strMeasure3 != null ){ 
+								dataToShow = dataToShow + '<span class="badge badge-primary badge-pill"> ' + pije.strMeasure3 + ' </span>' ;
+							} 
+							dataToShow = dataToShow + '</li>';
+						}
+
+						if( pije.strIngredient4 != null ){
+							dataToShow = dataToShow + '<li class="list-group-item d-flex justify-content-between align-items-center"> ' + pije.strIngredient4 ;
+							
+							if( pije.strMeasure4 != null ){ 
+								dataToShow = dataToShow + '<span class="badge badge-primary badge-pill"> ' + pije.strMeasure4 + ' </span>' ;
+							} 
+							dataToShow = dataToShow + '</li>';
+						}
+
+						if( pije.strIngredient5 != null ){
+							dataToShow = dataToShow + '<li class="list-group-item d-flex justify-content-between align-items-center"> ' + pije.strIngredient5 ;
+							
+							if( pije.strMeasure5 != null ){ 
+								dataToShow = dataToShow + '<span class="badge badge-primary badge-pill"> ' + pije.strMeasure5 + ' </span>' ;
+							} 
+							dataToShow = dataToShow + '</li>';
+						}
+
+						if( pije.strIngredient6 != null ){
+							dataToShow = dataToShow + '<li class="list-group-item d-flex justify-content-between align-items-center"> ' + pije.strIngredient6 ;
+							
+							if( pije.strMeasure6 != null ){ 
+								dataToShow = dataToShow + '<span class="badge badge-primary badge-pill"> ' + pije.strMeasure6 + ' </span>' ;
+							} 
+							dataToShow = dataToShow + '</li>';
+						}
+
+						if( pije.strIngredient7 != null ){
+							dataToShow = dataToShow + '<li class="list-group-item d-flex justify-content-between align-items-center"> ' + pije.strIngredient7 ;
+							
+							if( pije.strMeasure7 != null ){ 
+								dataToShow = dataToShow + '<span class="badge badge-primary badge-pill"> ' + pije.strMeasure7 + ' </span>' ;
+							} 
+							dataToShow = dataToShow + '</li>';
+						}
+
+						if( pije.strIngredient8 != null ){
+							dataToShow = dataToShow + '<li class="list-group-item d-flex justify-content-between align-items-center"> ' + pije.strIngredient8 ;
+							
+							if( pije.strMeasure8 != null ){ 
+								dataToShow = dataToShow + '<span class="badge badge-primary badge-pill"> ' + pije.strMeasure8 + ' </span>' ;
+							} 
+							dataToShow = dataToShow + '</li>';
+						}
+
+						if( pije.strIngredient9 != null ){
+							dataToShow = dataToShow + '<li class="list-group-item d-flex justify-content-between align-items-center"> ' + pije.strIngredient9 ;
+							
+							if( pije.strMeasure9 != null ){ 
+								dataToShow = dataToShow + '<span class="badge badge-primary badge-pill"> ' + pije.strMeasure9 + ' </span>' ;
+							} 
+							dataToShow = dataToShow + '</li>';
+						}
+
+						if( pije.strIngredient10 != null ){
+							dataToShow = dataToShow + '<li class="list-group-item d-flex justify-content-between align-items-center"> ' + pije.strIngredient10 ;
+							
+							if( pije.strMeasure10 != null ){ 
+								dataToShow = dataToShow + '<span class="badge badge-primary badge-pill"> ' + pije.strMeasure10 + ' </span>' ;
+							} 
+							dataToShow = dataToShow + '</li>';
+						}
+
+						if( pije.strIngredient11 != null ){
+							dataToShow = dataToShow + '<li class="list-group-item d-flex justify-content-between align-items-center"> ' + pije.strIngredient11 ;
+							
+							if( pije.strMeasure11 != null ){ 
+								dataToShow = dataToShow + '<span class="badge badge-primary badge-pill"> ' + pije.strMeasure11 + ' </span>' ;
+							} 
+							dataToShow = dataToShow + '</li>';
+						}
+
+						if( pije.strIngredient12 != null ){
+							dataToShow = dataToShow + '<li class="list-group-item d-flex justify-content-between align-items-center"> ' + pije.strIngredient12 ;
+							
+							if( pije.strMeasure12 != null ){ 
+								dataToShow = dataToShow + '<span class="badge badge-primary badge-pill"> ' + pije.strMeasure12 + ' </span>' ;
+							} 
+							dataToShow = dataToShow + '</li>';
+						}
+
+						if( pije.strIngredient13 != null ){
+							dataToShow = dataToShow + '<li class="list-group-item d-flex justify-content-between align-items-center"> ' + pije.strIngredient13 ;
+							
+							if( pije.strMeasure13 != null ){ 
+								dataToShow = dataToShow + '<span class="badge badge-primary badge-pill"> ' + pije.strMeasure13 + ' </span>' ;
+							} 
+							dataToShow = dataToShow + '</li>';
+						}
+
+						if( pije.strIngredient14 != null ){
+							dataToShow = dataToShow + '<li class="list-group-item d-flex justify-content-between align-items-center"> ' + pije.strIngredient14 ;
+							
+							if( pije.strMeasure14 != null ){ 
+								dataToShow = dataToShow + '<span class="badge badge-primary badge-pill"> ' + pije.strMeasure14 + ' </span>' ;
+							} 
+							dataToShow = dataToShow + '</li>';
+						}
+
+						if( pije.strIngredient15 != null ){
+							dataToShow = dataToShow + '<li class="list-group-item d-flex justify-content-between align-items-center"> ' + pije.strIngredient15 ;
+							
+							if( pije.strMeasure15 != null ){ 
+								dataToShow = dataToShow + '<span class="badge badge-primary badge-pill"> ' + pije.strMeasure15 + ' </span>' ;
+							} 
+							dataToShow = dataToShow + '</li>';
+						}
+						
+						dataToShow = dataToShow + '</ul>';
+
+						dataToShow = dataToShow + '</div> </div> </div> </div>' ;
+						
+                        
+                    }
+
+                    //document.querySelector('#recipeArticleContainer').innerHTML  = nutrientsToShow ;
+					document.querySelector('#incomeDataContainer').innerHTML  = dataToShow ;
+
+				})
+				.catch(function (error) {
+					// handle error
+					console.log(error);
+				}) ;
+
+            }
+
+			let nonalc = (  ) => {
+                
+				let fullQuery = 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?a=Non_Alcoholic' ;
+
+				axios.get(fullQuery)
+				.then(function (res) {
+                    console.log(res.data);
+                    
+					let dataToShow = '' ;
+
+                    for( let pije of res.data.drinks ){
+                        
+						dataToShow = dataToShow + '<div class="card shadow " > <div class="row no-gutters"> <div class="col-sm-4"> ' ;
+						dataToShow = dataToShow + '<img class="img-fluid" src="' + pije.strDrinkThumb + '" alt="...">' ;
+						dataToShow = dataToShow + '</div> <div class="col-sm-8"> <div class="card-body">' ;
+						dataToShow = dataToShow + '<h5 class="card-title">' + pije.strDrink + '</h5>';
+						dataToShow = dataToShow + '<p class="card-text">' +  pije.strInstructions + '</p>';
+						
+
+						dataToShow = dataToShow + '<div class="card-body">' ;
+
+						if( pije.strAlcoholic != null ){
+							dataToShow = dataToShow + ' <span class="badge badge-primary"> ' + pije.strAlcoholic + ' </span>' ;
+						}
+
+						if( pije.strCategory != null ){
+							dataToShow = dataToShow + ' <span class="badge badge-primary"> ' + pije.strCategory + ' </span>' ;
+						}
+							
+						if( pije.strGlass != null ){
+							dataToShow = dataToShow + ' <span class="badge badge-primary"> ' + pije.strGlass + ' </span> ' ;
+						}
+						dataToShow = dataToShow + '</div>' ;
+
+
+
+						dataToShow = dataToShow + '<ul class="list-group">' ;
+
+						if( pije.strIngredient1 != null ){
+							dataToShow = dataToShow + '<li class="list-group-item d-flex justify-content-between align-items-center"> ' + pije.strIngredient1 ;
+							
+							if( pije.strMeasure1 != null ){ 
+								dataToShow = dataToShow + '<span class="badge badge-primary badge-pill"> ' + pije.strMeasure1 + ' </span>' ;
+							} 
+							dataToShow = dataToShow + '</li>';
+						}
+
+						if( pije.strIngredient2 != null ){
+							dataToShow = dataToShow + '<li class="list-group-item d-flex justify-content-between align-items-center"> ' + pije.strIngredient2 ;
+							
+							if( pije.strMeasure2 != null ){ 
+								dataToShow = dataToShow + '<span class="badge badge-primary badge-pill"> ' + pije.strMeasure2 + ' </span>' ;
+							} 
+							dataToShow = dataToShow + '</li>';
+						}
+
+						if( pije.strIngredient3 != null ){
+							dataToShow = dataToShow + '<li class="list-group-item d-flex justify-content-between align-items-center"> ' + pije.strIngredient3 ;
+							
+							if( pije.strMeasure3 != null ){ 
+								dataToShow = dataToShow + '<span class="badge badge-primary badge-pill"> ' + pije.strMeasure3 + ' </span>' ;
+							} 
+							dataToShow = dataToShow + '</li>';
+						}
+
+						if( pije.strIngredient4 != null ){
+							dataToShow = dataToShow + '<li class="list-group-item d-flex justify-content-between align-items-center"> ' + pije.strIngredient4 ;
+							
+							if( pije.strMeasure4 != null ){ 
+								dataToShow = dataToShow + '<span class="badge badge-primary badge-pill"> ' + pije.strMeasure4 + ' </span>' ;
+							} 
+							dataToShow = dataToShow + '</li>';
+						}
+
+						if( pije.strIngredient5 != null ){
+							dataToShow = dataToShow + '<li class="list-group-item d-flex justify-content-between align-items-center"> ' + pije.strIngredient5 ;
+							
+							if( pije.strMeasure5 != null ){ 
+								dataToShow = dataToShow + '<span class="badge badge-primary badge-pill"> ' + pije.strMeasure5 + ' </span>' ;
+							} 
+							dataToShow = dataToShow + '</li>';
+						}
+
+						if( pije.strIngredient6 != null ){
+							dataToShow = dataToShow + '<li class="list-group-item d-flex justify-content-between align-items-center"> ' + pije.strIngredient6 ;
+							
+							if( pije.strMeasure6 != null ){ 
+								dataToShow = dataToShow + '<span class="badge badge-primary badge-pill"> ' + pije.strMeasure6 + ' </span>' ;
+							} 
+							dataToShow = dataToShow + '</li>';
+						}
+
+						if( pije.strIngredient7 != null ){
+							dataToShow = dataToShow + '<li class="list-group-item d-flex justify-content-between align-items-center"> ' + pije.strIngredient7 ;
+							
+							if( pije.strMeasure7 != null ){ 
+								dataToShow = dataToShow + '<span class="badge badge-primary badge-pill"> ' + pije.strMeasure7 + ' </span>' ;
+							} 
+							dataToShow = dataToShow + '</li>';
+						}
+
+						if( pije.strIngredient8 != null ){
+							dataToShow = dataToShow + '<li class="list-group-item d-flex justify-content-between align-items-center"> ' + pije.strIngredient8 ;
+							
+							if( pije.strMeasure8 != null ){ 
+								dataToShow = dataToShow + '<span class="badge badge-primary badge-pill"> ' + pije.strMeasure8 + ' </span>' ;
+							} 
+							dataToShow = dataToShow + '</li>';
+						}
+
+						if( pije.strIngredient9 != null ){
+							dataToShow = dataToShow + '<li class="list-group-item d-flex justify-content-between align-items-center"> ' + pije.strIngredient9 ;
+							
+							if( pije.strMeasure9 != null ){ 
+								dataToShow = dataToShow + '<span class="badge badge-primary badge-pill"> ' + pije.strMeasure9 + ' </span>' ;
+							} 
+							dataToShow = dataToShow + '</li>';
+						}
+
+						if( pije.strIngredient10 != null ){
+							dataToShow = dataToShow + '<li class="list-group-item d-flex justify-content-between align-items-center"> ' + pije.strIngredient10 ;
+							
+							if( pije.strMeasure10 != null ){ 
+								dataToShow = dataToShow + '<span class="badge badge-primary badge-pill"> ' + pije.strMeasure10 + ' </span>' ;
+							} 
+							dataToShow = dataToShow + '</li>';
+						}
+
+						if( pije.strIngredient11 != null ){
+							dataToShow = dataToShow + '<li class="list-group-item d-flex justify-content-between align-items-center"> ' + pije.strIngredient11 ;
+							
+							if( pije.strMeasure11 != null ){ 
+								dataToShow = dataToShow + '<span class="badge badge-primary badge-pill"> ' + pije.strMeasure11 + ' </span>' ;
+							} 
+							dataToShow = dataToShow + '</li>';
+						}
+
+						if( pije.strIngredient12 != null ){
+							dataToShow = dataToShow + '<li class="list-group-item d-flex justify-content-between align-items-center"> ' + pije.strIngredient12 ;
+							
+							if( pije.strMeasure12 != null ){ 
+								dataToShow = dataToShow + '<span class="badge badge-primary badge-pill"> ' + pije.strMeasure12 + ' </span>' ;
+							} 
+							dataToShow = dataToShow + '</li>';
+						}
+
+						if( pije.strIngredient13 != null ){
+							dataToShow = dataToShow + '<li class="list-group-item d-flex justify-content-between align-items-center"> ' + pije.strIngredient13 ;
+							
+							if( pije.strMeasure13 != null ){ 
+								dataToShow = dataToShow + '<span class="badge badge-primary badge-pill"> ' + pije.strMeasure13 + ' </span>' ;
+							} 
+							dataToShow = dataToShow + '</li>';
+						}
+
+						if( pije.strIngredient14 != null ){
+							dataToShow = dataToShow + '<li class="list-group-item d-flex justify-content-between align-items-center"> ' + pije.strIngredient14 ;
+							
+							if( pije.strMeasure14 != null ){ 
+								dataToShow = dataToShow + '<span class="badge badge-primary badge-pill"> ' + pije.strMeasure14 + ' </span>' ;
+							} 
+							dataToShow = dataToShow + '</li>';
+						}
+
+						if( pije.strIngredient15 != null ){
+							dataToShow = dataToShow + '<li class="list-group-item d-flex justify-content-between align-items-center"> ' + pije.strIngredient15 ;
+							
+							if( pije.strMeasure15 != null ){ 
+								dataToShow = dataToShow + '<span class="badge badge-primary badge-pill"> ' + pije.strMeasure15 + ' </span>' ;
+							} 
+							dataToShow = dataToShow + '</li>';
+						}
+						
+						dataToShow = dataToShow + '</ul>';
+
+						dataToShow = dataToShow + '</div> </div> </div> </div>' ;
+						
+                        
+                    }
+
+                    //document.querySelector('#recipeArticleContainer').innerHTML  = nutrientsToShow ;
+					document.querySelector('#incomeDataContainer').innerHTML  = dataToShow ;
+
+				})
+				.catch(function (error) {
+					// handle error
+					console.log(error);
+				}) ;
+
+            }
+
+
+			let cocbyname = (  ) => {
+                
+                let dataparam = document.querySelector('#cocbyname').value.trim() ;
+				let fullQuery = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=' + dataparam ;
+
+				axios.get(fullQuery)
+				.then(function (res) {
+                    console.log(res.data.drinks);
+
+                    let dataToShow = '' ;
+
+                    for( let pije of res.data.drinks ){
+                      
+						dataToShow = dataToShow + '<div class="card shadow " > <div class="row no-gutters"> <div class="col-sm-4"> ' ;
+						dataToShow = dataToShow + '<img class="img-fluid" src="' + pije.strDrinkThumb + '" alt="...">' ;
+						dataToShow = dataToShow + '</div> <div class="col-sm-8"> <div class="card-body">' ;
+						dataToShow = dataToShow + '<h5 class="card-title">' + pije.strDrink + '</h5>';
+						dataToShow = dataToShow + '<p class="card-text">' +  pije.strInstructions + '</p>';
+						
+
+						dataToShow = dataToShow + '<div class="card-body">' ;
+
+						if( pije.strAlcoholic != null ){
+							dataToShow = dataToShow + ' <span class="badge badge-primary"> ' + pije.strAlcoholic + ' </span> ' ;
+						}
+
+						if( pije.strCategory != null ){
+							dataToShow = dataToShow + ' <span class="badge badge-primary"> ' + pije.strCategory + ' </span> ' ;
+						}
+							
+						if( pije.strGlass != null ){
+							dataToShow = dataToShow + ' <span class="badge badge-primary"> ' + pije.strGlass + ' </span> ' ;
+						}
+						dataToShow = dataToShow + '</div>' ;
+
+
+
+						dataToShow = dataToShow + '<ul class="list-group">' ;
+
+						if( pije.strIngredient1 != null ){
+							dataToShow = dataToShow + '<li class="list-group-item d-flex justify-content-between align-items-center"> ' + pije.strIngredient1 ;
+							
+							if( pije.strMeasure1 != null ){ 
+								dataToShow = dataToShow + '<span class="badge badge-primary badge-pill"> ' + pije.strMeasure1 + ' </span>' ;
+							} 
+							dataToShow = dataToShow + '</li>';
+						}
+
+						if( pije.strIngredient2 != null ){
+							dataToShow = dataToShow + '<li class="list-group-item d-flex justify-content-between align-items-center"> ' + pije.strIngredient2 ;
+							
+							if( pije.strMeasure2 != null ){ 
+								dataToShow = dataToShow + '<span class="badge badge-primary badge-pill"> ' + pije.strMeasure2 + ' </span>' ;
+							} 
+							dataToShow = dataToShow + '</li>';
+						}
+
+						if( pije.strIngredient3 != null ){
+							dataToShow = dataToShow + '<li class="list-group-item d-flex justify-content-between align-items-center"> ' + pije.strIngredient3 ;
+							
+							if( pije.strMeasure3 != null ){ 
+								dataToShow = dataToShow + '<span class="badge badge-primary badge-pill"> ' + pije.strMeasure3 + ' </span>' ;
+							} 
+							dataToShow = dataToShow + '</li>';
+						}
+
+						if( pije.strIngredient4 != null ){
+							dataToShow = dataToShow + '<li class="list-group-item d-flex justify-content-between align-items-center"> ' + pije.strIngredient4 ;
+							
+							if( pije.strMeasure4 != null ){ 
+								dataToShow = dataToShow + '<span class="badge badge-primary badge-pill"> ' + pije.strMeasure4 + ' </span>' ;
+							} 
+							dataToShow = dataToShow + '</li>';
+						}
+
+						if( pije.strIngredient5 != null ){
+							dataToShow = dataToShow + '<li class="list-group-item d-flex justify-content-between align-items-center"> ' + pije.strIngredient5 ;
+							
+							if( pije.strMeasure5 != null ){ 
+								dataToShow = dataToShow + '<span class="badge badge-primary badge-pill"> ' + pije.strMeasure5 + ' </span>' ;
+							} 
+							dataToShow = dataToShow + '</li>';
+						}
+
+						if( pije.strIngredient6 != null ){
+							dataToShow = dataToShow + '<li class="list-group-item d-flex justify-content-between align-items-center"> ' + pije.strIngredient6 ;
+							
+							if( pije.strMeasure6 != null ){ 
+								dataToShow = dataToShow + '<span class="badge badge-primary badge-pill"> ' + pije.strMeasure6 + ' </span>' ;
+							} 
+							dataToShow = dataToShow + '</li>';
+						}
+
+						if( pije.strIngredient7 != null ){
+							dataToShow = dataToShow + '<li class="list-group-item d-flex justify-content-between align-items-center"> ' + pije.strIngredient7 ;
+							
+							if( pije.strMeasure7 != null ){ 
+								dataToShow = dataToShow + '<span class="badge badge-primary badge-pill"> ' + pije.strMeasure7 + ' </span>' ;
+							} 
+							dataToShow = dataToShow + '</li>';
+						}
+
+						if( pije.strIngredient8 != null ){
+							dataToShow = dataToShow + '<li class="list-group-item d-flex justify-content-between align-items-center"> ' + pije.strIngredient8 ;
+							
+							if( pije.strMeasure8 != null ){ 
+								dataToShow = dataToShow + '<span class="badge badge-primary badge-pill"> ' + pije.strMeasure8 + ' </span>' ;
+							} 
+							dataToShow = dataToShow + '</li>';
+						}
+
+						if( pije.strIngredient9 != null ){
+							dataToShow = dataToShow + '<li class="list-group-item d-flex justify-content-between align-items-center"> ' + pije.strIngredient9 ;
+							
+							if( pije.strMeasure9 != null ){ 
+								dataToShow = dataToShow + '<span class="badge badge-primary badge-pill"> ' + pije.strMeasure9 + ' </span>' ;
+							} 
+							dataToShow = dataToShow + '</li>';
+						}
+
+						if( pije.strIngredient10 != null ){
+							dataToShow = dataToShow + '<li class="list-group-item d-flex justify-content-between align-items-center"> ' + pije.strIngredient10 ;
+							
+							if( pije.strMeasure10 != null ){ 
+								dataToShow = dataToShow + '<span class="badge badge-primary badge-pill"> ' + pije.strMeasure10 + ' </span>' ;
+							} 
+							dataToShow = dataToShow + '</li>';
+						}
+
+						if( pije.strIngredient11 != null ){
+							dataToShow = dataToShow + '<li class="list-group-item d-flex justify-content-between align-items-center"> ' + pije.strIngredient11 ;
+							
+							if( pije.strMeasure11 != null ){ 
+								dataToShow = dataToShow + '<span class="badge badge-primary badge-pill"> ' + pije.strMeasure11 + ' </span>' ;
+							} 
+							dataToShow = dataToShow + '</li>';
+						}
+
+						if( pije.strIngredient12 != null ){
+							dataToShow = dataToShow + '<li class="list-group-item d-flex justify-content-between align-items-center"> ' + pije.strIngredient12 ;
+							
+							if( pije.strMeasure12 != null ){ 
+								dataToShow = dataToShow + '<span class="badge badge-primary badge-pill"> ' + pije.strMeasure12 + ' </span>' ;
+							} 
+							dataToShow = dataToShow + '</li>';
+						}
+
+						if( pije.strIngredient13 != null ){
+							dataToShow = dataToShow + '<li class="list-group-item d-flex justify-content-between align-items-center"> ' + pije.strIngredient13 ;
+							
+							if( pije.strMeasure13 != null ){ 
+								dataToShow = dataToShow + '<span class="badge badge-primary badge-pill"> ' + pije.strMeasure13 + ' </span>' ;
+							} 
+							dataToShow = dataToShow + '</li>';
+						}
+
+						if( pije.strIngredient14 != null ){
+							dataToShow = dataToShow + '<li class="list-group-item d-flex justify-content-between align-items-center"> ' + pije.strIngredient14 ;
+							
+							if( pije.strMeasure14 != null ){ 
+								dataToShow = dataToShow + '<span class="badge badge-primary badge-pill"> ' + pije.strMeasure14 + ' </span>' ;
+							} 
+							dataToShow = dataToShow + '</li>';
+						}
+
+						if( pije.strIngredient15 != null ){
+							dataToShow = dataToShow + '<li class="list-group-item d-flex justify-content-between align-items-center"> ' + pije.strIngredient15 ;
+							
+							if( pije.strMeasure15 != null ){ 
+								dataToShow = dataToShow + '<span class="badge badge-primary badge-pill"> ' + pije.strMeasure15 + ' </span>' ;
+							} 
+							dataToShow = dataToShow + '</li>';
+						}
+						
+						dataToShow = dataToShow + '</ul>';
+
+						// dataToShow = dataToShow + '<a href="#" class="card-link" onclick="singleRecipe(' +  pije.id + ')" > Recipe </a>' ;
+						
+						dataToShow = dataToShow + '</div> </div> </div> </div>' ;
+						
+                        
+                    }
+                    
+					document.querySelector('#incomeDataContainer').innerHTML  = dataToShow ;
+
+				})
+				.catch(function (error) {
+					// handle error
+					console.log(error);
+				}) ;
+
+            }
+
+			let cocfirstlett = (  ) => {
+                
+                let dataparam = document.querySelector('#cocfirstlett').value.trim() ;
+				let fullQuery = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?f=' + dataparam ;
+
+				axios.get(fullQuery)
+				.then(function (res) {
+                    console.log(res.data);
+                    
+					let dataToShow = '' ;
+
+                    for( let pije of res.data.drinks ){
+                    
+						dataToShow = dataToShow + '<div class="card shadow " > <div class="row no-gutters"> <div class="col-sm-4"> ' ;
+						dataToShow = dataToShow + '<img class="img-fluid" src="' + pije.strDrinkThumb + '" alt="...">' ;
+						dataToShow = dataToShow + '</div> <div class="col-sm-8"> <div class="card-body">' ;
+						dataToShow = dataToShow + '<h5 class="card-title">' + pije.strDrink + '</h5>';
+						dataToShow = dataToShow + '<p class="card-text">' +  pije.strInstructions + '</p>';
+						
+
+						dataToShow = dataToShow + '<div class="card-body">' ;
+
+						if( pije.strAlcoholic != null ){
+							dataToShow = dataToShow + ' <span class="badge badge-primary"> ' + pije.strAlcoholic + ' </span> ' ;
+						}
+
+						if( pije.strCategory != null ){
+							dataToShow = dataToShow + ' <span class="badge badge-primary"> ' + pije.strCategory + ' </span> ' ;
+						}
+							
+						if( pije.strGlass != null ){
+							dataToShow = dataToShow + ' <span class="badge badge-primary"> ' + pije.strGlass + ' </span> ' ;
+						}
+						dataToShow = dataToShow + '</div>' ;
+
+
+
+						dataToShow = dataToShow + '<ul class="list-group">' ;
+
+						if( pije.strIngredient1 != null ){
+							dataToShow = dataToShow + '<li class="list-group-item d-flex justify-content-between align-items-center"> ' + pije.strIngredient1 ;
+							
+							if( pije.strMeasure1 != null ){ 
+								dataToShow = dataToShow + '<span class="badge badge-primary badge-pill"> ' + pije.strMeasure1 + ' </span>' ;
+							} 
+							dataToShow = dataToShow + '</li>';
+						}
+
+						if( pije.strIngredient2 != null ){
+							dataToShow = dataToShow + '<li class="list-group-item d-flex justify-content-between align-items-center"> ' + pije.strIngredient2 ;
+							
+							if( pije.strMeasure2 != null ){ 
+								dataToShow = dataToShow + '<span class="badge badge-primary badge-pill"> ' + pije.strMeasure2 + ' </span>' ;
+							} 
+							dataToShow = dataToShow + '</li>';
+						}
+
+						if( pije.strIngredient3 != null ){
+							dataToShow = dataToShow + '<li class="list-group-item d-flex justify-content-between align-items-center"> ' + pije.strIngredient3 ;
+							
+							if( pije.strMeasure3 != null ){ 
+								dataToShow = dataToShow + '<span class="badge badge-primary badge-pill"> ' + pije.strMeasure3 + ' </span>' ;
+							} 
+							dataToShow = dataToShow + '</li>';
+						}
+
+						if( pije.strIngredient4 != null ){
+							dataToShow = dataToShow + '<li class="list-group-item d-flex justify-content-between align-items-center"> ' + pije.strIngredient4 ;
+							
+							if( pije.strMeasure4 != null ){ 
+								dataToShow = dataToShow + '<span class="badge badge-primary badge-pill"> ' + pije.strMeasure4 + ' </span>' ;
+							} 
+							dataToShow = dataToShow + '</li>';
+						}
+
+						if( pije.strIngredient5 != null ){
+							dataToShow = dataToShow + '<li class="list-group-item d-flex justify-content-between align-items-center"> ' + pije.strIngredient5 ;
+							
+							if( pije.strMeasure5 != null ){ 
+								dataToShow = dataToShow + '<span class="badge badge-primary badge-pill"> ' + pije.strMeasure5 + ' </span>' ;
+							} 
+							dataToShow = dataToShow + '</li>';
+						}
+
+						if( pije.strIngredient6 != null ){
+							dataToShow = dataToShow + '<li class="list-group-item d-flex justify-content-between align-items-center"> ' + pije.strIngredient6 ;
+							
+							if( pije.strMeasure6 != null ){ 
+								dataToShow = dataToShow + '<span class="badge badge-primary badge-pill"> ' + pije.strMeasure6 + ' </span>' ;
+							} 
+							dataToShow = dataToShow + '</li>';
+						}
+
+						if( pije.strIngredient7 != null ){
+							dataToShow = dataToShow + '<li class="list-group-item d-flex justify-content-between align-items-center"> ' + pije.strIngredient7 ;
+							
+							if( pije.strMeasure7 != null ){ 
+								dataToShow = dataToShow + '<span class="badge badge-primary badge-pill"> ' + pije.strMeasure7 + ' </span>' ;
+							} 
+							dataToShow = dataToShow + '</li>';
+						}
+
+						if( pije.strIngredient8 != null ){
+							dataToShow = dataToShow + '<li class="list-group-item d-flex justify-content-between align-items-center"> ' + pije.strIngredient8 ;
+							
+							if( pije.strMeasure8 != null ){ 
+								dataToShow = dataToShow + '<span class="badge badge-primary badge-pill"> ' + pije.strMeasure8 + ' </span>' ;
+							} 
+							dataToShow = dataToShow + '</li>';
+						}
+
+						if( pije.strIngredient9 != null ){
+							dataToShow = dataToShow + '<li class="list-group-item d-flex justify-content-between align-items-center"> ' + pije.strIngredient9 ;
+							
+							if( pije.strMeasure9 != null ){ 
+								dataToShow = dataToShow + '<span class="badge badge-primary badge-pill"> ' + pije.strMeasure9 + ' </span>' ;
+							} 
+							dataToShow = dataToShow + '</li>';
+						}
+
+						if( pije.strIngredient10 != null ){
+							dataToShow = dataToShow + '<li class="list-group-item d-flex justify-content-between align-items-center"> ' + pije.strIngredient10 ;
+							
+							if( pije.strMeasure10 != null ){ 
+								dataToShow = dataToShow + '<span class="badge badge-primary badge-pill"> ' + pije.strMeasure10 + ' </span>' ;
+							} 
+							dataToShow = dataToShow + '</li>';
+						}
+
+						if( pije.strIngredient11 != null ){
+							dataToShow = dataToShow + '<li class="list-group-item d-flex justify-content-between align-items-center"> ' + pije.strIngredient11 ;
+							
+							if( pije.strMeasure11 != null ){ 
+								dataToShow = dataToShow + '<span class="badge badge-primary badge-pill"> ' + pije.strMeasure11 + ' </span>' ;
+							} 
+							dataToShow = dataToShow + '</li>';
+						}
+
+						if( pije.strIngredient12 != null ){
+							dataToShow = dataToShow + '<li class="list-group-item d-flex justify-content-between align-items-center"> ' + pije.strIngredient12 ;
+							
+							if( pije.strMeasure12 != null ){ 
+								dataToShow = dataToShow + '<span class="badge badge-primary badge-pill"> ' + pije.strMeasure12 + ' </span>' ;
+							} 
+							dataToShow = dataToShow + '</li>';
+						}
+
+						if( pije.strIngredient13 != null ){
+							dataToShow = dataToShow + '<li class="list-group-item d-flex justify-content-between align-items-center"> ' + pije.strIngredient13 ;
+							
+							if( pije.strMeasure13 != null ){ 
+								dataToShow = dataToShow + '<span class="badge badge-primary badge-pill"> ' + pije.strMeasure13 + ' </span>' ;
+							} 
+							dataToShow = dataToShow + '</li>';
+						}
+
+						if( pije.strIngredient14 != null ){
+							dataToShow = dataToShow + '<li class="list-group-item d-flex justify-content-between align-items-center"> ' + pije.strIngredient14 ;
+							
+							if( pije.strMeasure14 != null ){ 
+								dataToShow = dataToShow + '<span class="badge badge-primary badge-pill"> ' + pije.strMeasure14 + ' </span>' ;
+							} 
+							dataToShow = dataToShow + '</li>';
+						}
+
+						if( pije.strIngredient15 != null ){
+							dataToShow = dataToShow + '<li class="list-group-item d-flex justify-content-between align-items-center"> ' + pije.strIngredient15 ;
+							
+							if( pije.strMeasure15 != null ){ 
+								dataToShow = dataToShow + '<span class="badge badge-primary badge-pill"> ' + pije.strMeasure15 + ' </span>' ;
+							} 
+							dataToShow = dataToShow + '</li>';
+						}
+						
+						dataToShow = dataToShow + '</ul>';
+
+						dataToShow = dataToShow + '</div> </div> </div> </div>' ;
+						
+                        
+                    }
+
+                    document.querySelector('#incomeDataContainer').innerHTML  = dataToShow ;
+
+				})
+				.catch(function (error) {
+					// handle error
+					console.log(error);
+				}) ;
+
+            }
+
+			let ingnam = ( ) => {
+                
+                let dataparam = document.querySelector('#ingnam').value.trim() ;
+				let fullQuery = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?i=' + dataparam ;
+
+				axios.get(fullQuery)
+				.then(function (res) {
+                    console.log(res.data);
+                    
+					let dataToShow = '' ;
+
+                    for( let pije of res.data.drinks ){
+                        
+						dataToShow = dataToShow + '<div class="card shadow " > <div class="row no-gutters"> <div class="col-sm-4"> ' ;
+						dataToShow = dataToShow + '<img class="img-fluid" src="' + pije.strDrinkThumb + '" alt="...">' ;
+						dataToShow = dataToShow + '</div> <div class="col-sm-8"> <div class="card-body">' ;
+						dataToShow = dataToShow + '<h5 class="card-title">' + pije.strDrink + '</h5>';
+						dataToShow = dataToShow + '<p class="card-text">' +  pije.strInstructions + '</p>';
+						
+
+						dataToShow = dataToShow + '<div class="card-body">' ;
+
+						if( pije.strAlcoholic != null ){
+							dataToShow = dataToShow + ' <span class="badge badge-primary"> ' + pije.strAlcoholic + ' </span> ' ;
+						}
+
+						if( pije.strCategory != null ){
+							dataToShow = dataToShow + ' <span class="badge badge-primary"> ' + pije.strCategory + ' </span> ' ;
+						}
+							
+						if( pije.strGlass != null ){
+							dataToShow = dataToShow + ' <span class="badge badge-primary"> ' + pije.strGlass + ' </span> ' ;
+						}
+						dataToShow = dataToShow + '</div>' ;
+
+
+
+						dataToShow = dataToShow + '<ul class="list-group">' ;
+
+						if( pije.strIngredient1 != null ){
+							dataToShow = dataToShow + '<li class="list-group-item d-flex justify-content-between align-items-center"> ' + pije.strIngredient1 ;
+							
+							if( pije.strMeasure1 != null ){ 
+								dataToShow = dataToShow + '<span class="badge badge-primary badge-pill"> ' + pije.strMeasure1 + ' </span>' ;
+							} 
+							dataToShow = dataToShow + '</li>';
+						}
+
+						if( pije.strIngredient2 != null ){
+							dataToShow = dataToShow + '<li class="list-group-item d-flex justify-content-between align-items-center"> ' + pije.strIngredient2 ;
+							
+							if( pije.strMeasure2 != null ){ 
+								dataToShow = dataToShow + '<span class="badge badge-primary badge-pill"> ' + pije.strMeasure2 + ' </span>' ;
+							} 
+							dataToShow = dataToShow + '</li>';
+						}
+
+						if( pije.strIngredient3 != null ){
+							dataToShow = dataToShow + '<li class="list-group-item d-flex justify-content-between align-items-center"> ' + pije.strIngredient3 ;
+							
+							if( pije.strMeasure3 != null ){ 
+								dataToShow = dataToShow + '<span class="badge badge-primary badge-pill"> ' + pije.strMeasure3 + ' </span>' ;
+							} 
+							dataToShow = dataToShow + '</li>';
+						}
+
+						if( pije.strIngredient4 != null ){
+							dataToShow = dataToShow + '<li class="list-group-item d-flex justify-content-between align-items-center"> ' + pije.strIngredient4 ;
+							
+							if( pije.strMeasure4 != null ){ 
+								dataToShow = dataToShow + '<span class="badge badge-primary badge-pill"> ' + pije.strMeasure4 + ' </span>' ;
+							} 
+							dataToShow = dataToShow + '</li>';
+						}
+
+						if( pije.strIngredient5 != null ){
+							dataToShow = dataToShow + '<li class="list-group-item d-flex justify-content-between align-items-center"> ' + pije.strIngredient5 ;
+							
+							if( pije.strMeasure5 != null ){ 
+								dataToShow = dataToShow + '<span class="badge badge-primary badge-pill"> ' + pije.strMeasure5 + ' </span>' ;
+							} 
+							dataToShow = dataToShow + '</li>';
+						}
+
+						if( pije.strIngredient6 != null ){
+							dataToShow = dataToShow + '<li class="list-group-item d-flex justify-content-between align-items-center"> ' + pije.strIngredient6 ;
+							
+							if( pije.strMeasure6 != null ){ 
+								dataToShow = dataToShow + '<span class="badge badge-primary badge-pill"> ' + pije.strMeasure6 + ' </span>' ;
+							} 
+							dataToShow = dataToShow + '</li>';
+						}
+
+						if( pije.strIngredient7 != null ){
+							dataToShow = dataToShow + '<li class="list-group-item d-flex justify-content-between align-items-center"> ' + pije.strIngredient7 ;
+							
+							if( pije.strMeasure7 != null ){ 
+								dataToShow = dataToShow + '<span class="badge badge-primary badge-pill"> ' + pije.strMeasure7 + ' </span>' ;
+							} 
+							dataToShow = dataToShow + '</li>';
+						}
+
+						if( pije.strIngredient8 != null ){
+							dataToShow = dataToShow + '<li class="list-group-item d-flex justify-content-between align-items-center"> ' + pije.strIngredient8 ;
+							
+							if( pije.strMeasure8 != null ){ 
+								dataToShow = dataToShow + '<span class="badge badge-primary badge-pill"> ' + pije.strMeasure8 + ' </span>' ;
+							} 
+							dataToShow = dataToShow + '</li>';
+						}
+
+						if( pije.strIngredient9 != null ){
+							dataToShow = dataToShow + '<li class="list-group-item d-flex justify-content-between align-items-center"> ' + pije.strIngredient9 ;
+							
+							if( pije.strMeasure9 != null ){ 
+								dataToShow = dataToShow + '<span class="badge badge-primary badge-pill"> ' + pije.strMeasure9 + ' </span>' ;
+							} 
+							dataToShow = dataToShow + '</li>';
+						}
+
+						if( pije.strIngredient10 != null ){
+							dataToShow = dataToShow + '<li class="list-group-item d-flex justify-content-between align-items-center"> ' + pije.strIngredient10 ;
+							
+							if( pije.strMeasure10 != null ){ 
+								dataToShow = dataToShow + '<span class="badge badge-primary badge-pill"> ' + pije.strMeasure10 + ' </span>' ;
+							} 
+							dataToShow = dataToShow + '</li>';
+						}
+
+						if( pije.strIngredient11 != null ){
+							dataToShow = dataToShow + '<li class="list-group-item d-flex justify-content-between align-items-center"> ' + pije.strIngredient11 ;
+							
+							if( pije.strMeasure11 != null ){ 
+								dataToShow = dataToShow + '<span class="badge badge-primary badge-pill"> ' + pije.strMeasure11 + ' </span>' ;
+							} 
+							dataToShow = dataToShow + '</li>';
+						}
+
+						if( pije.strIngredient12 != null ){
+							dataToShow = dataToShow + '<li class="list-group-item d-flex justify-content-between align-items-center"> ' + pije.strIngredient12 ;
+							
+							if( pije.strMeasure12 != null ){ 
+								dataToShow = dataToShow + '<span class="badge badge-primary badge-pill"> ' + pije.strMeasure12 + ' </span>' ;
+							} 
+							dataToShow = dataToShow + '</li>';
+						}
+
+						if( pije.strIngredient13 != null ){
+							dataToShow = dataToShow + '<li class="list-group-item d-flex justify-content-between align-items-center"> ' + pije.strIngredient13 ;
+							
+							if( pije.strMeasure13 != null ){ 
+								dataToShow = dataToShow + '<span class="badge badge-primary badge-pill"> ' + pije.strMeasure13 + ' </span>' ;
+							} 
+							dataToShow = dataToShow + '</li>';
+						}
+
+						if( pije.strIngredient14 != null ){
+							dataToShow = dataToShow + '<li class="list-group-item d-flex justify-content-between align-items-center"> ' + pije.strIngredient14 ;
+							
+							if( pije.strMeasure14 != null ){ 
+								dataToShow = dataToShow + '<span class="badge badge-primary badge-pill"> ' + pije.strMeasure14 + ' </span>' ;
+							} 
+							dataToShow = dataToShow + '</li>';
+						}
+
+						if( pije.strIngredient15 != null ){
+							dataToShow = dataToShow + '<li class="list-group-item d-flex justify-content-between align-items-center"> ' + pije.strIngredient15 ;
+							
+							if( pije.strMeasure15 != null ){ 
+								dataToShow = dataToShow + '<span class="badge badge-primary badge-pill"> ' + pije.strMeasure15 + ' </span>' ;
+							} 
+							dataToShow = dataToShow + '</li>';
+						}
+						
+						dataToShow = dataToShow + '</ul>';
+
+						// dataToShow = dataToShow + '<a href="#" class="card-link" onclick="singleRecipe(' +  pije.id + ')" > Recipe </a>' ;
+						
+						dataToShow = dataToShow + '</div> </div> </div> </div>' ;
+						
+                        
+                    }
+
+					document.querySelector('#incomeDataContainer').innerHTML  = dataToShow ;
+
+				})
+				.catch(function (error) {
+					// handle error
+					console.log(error);
+				}) ;
+
+            }
+            
+
+
+		</script>
+		
+
+    </body>
+</html>

@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<title> Food website </title>
+		
+		<style>
+			html, body{
+				margin: 0px;
+				padding: 0px;
+			}
+
+			html{
+				height: 100%;
+			}
+
+			body{
+				height: auto;
+			}
+
+			label.form-check-label {
+    			font-size: large;
+			}
+
+			.checkbox-container {
+				display: flex;
+				flex-direction: row;
+				overflow-y: auto;
+				overflow-x: scroll;
+				width: inherit;
+
+				/*
+					min-width: 576px;
+					max-width: 576;
+				*/
+				
+			}
+
+			.form-check.form-check-inline {
+				margin-left: 2%;
+			}
+
+			.form-row {
+				width: 100%;
+				margin-bottom: 5%;
+			}
+
+			.orientimi-konteinerave{
+				display: flex;
+				flex-direction: column;
+			}
+
+			.img-fluid {
+				max-width: 100%;
+				height: 100% !important;;
+				/*height: fit-content !important;*/
+			}
+
+			.card {
+				margin-bottom: 5%;
+			}
+
+			li.list-group-item {
+				color: black;
+			}
+
+			.mydivider{
+				width: 90%;
+			}
+
+			.extra-info{
+				display: flex;
+				flex-direction: row !important;
+				
+			}
+
+			.my-li-item{
+				border: 0px !important;
+			}
+
+
+			::placeholder {
+				color: #28a745!important;
+				opacity: 1; /* Firefox */
+			}
+
+			:-ms-input-placeholder { /* Internet Explorer 10-11 */
+				color: #28a745!important;
+			}
+
+			::-ms-input-placeholder { /* Microsoft Edge */
+				color: #28a745!important;
+			}
+
+            div#incomeDataContainer {
+                min-height: 12rem;
+            }
+
+
+			/*
+				media query per 
+				screen width less than 576px
+			*/
+
+		</style>
+
+  
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+			
+
+  	</head>
+    <body >
+
+		<!-- fillon navbar -->
+		<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+			<a class="navbar-brand" href="#">Navbar</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+			  <span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="collapsibleNavbar">
+			  <ul class="navbar-nav">
+
+				<li class="nav-item">
+					<a class="nav-link" href="winerecomandation.html"> Wine Recomandation </a>
+				  </li>
+				  <li class="nav-item">
+					<a class="nav-link" href="mealplangenerator.html"> Generate Meal Plan </a>
+				  </li>
+				  <li class="nav-item">
+					<a class="nav-link" href="index.html"> Home </a>
+				  </li>    
+				  <li class="nav-item">
+					  <a class="nav-link" href="fooddatagenerator.html"> Generate Food Data </a>
+				  </li> 
+				  <li class="nav-item">
+					  <a class="nav-link" href="coctailgenerator.html"> Generate Coctail </a>
+				  </li> 
+					<li class="nav-item">
+					  <a class="nav-link" href="about.html"> About </a>
+				  </li>  
+
+			  </ul>
+			</div>  
+		</nav>
+
+		<!-- mbaron navbar -->
+
+
+
+		<h1 class="display-1 text-center text-warning pt-5 pb-5 " > Meal Plan Generator </h1>
+		
+
+
+		<div class="container bg-light pt-5 pb-3 ">
+			<form class="form-inline">
+
+			<div class="form-row" >
+				<div class="col-sm-5 col-12 mb-1 ml-3" >
+					<div class="form-group">
+						<input type="text" class="form-control-range" id="timeFrame" placeholder="timeFrame day or week" >
+					</div>
+				</div>
+
+				<div class="col-sm-5 col-12 ml-3" >
+					<div class="form-group">
+						<input type="number" class="form-control-range" id="targetCalories" placeholder="targetCalories" >
+					</div>
+				</div>
+
+			</div>
+
+
+			<div class="form-row orientimi-konteinerave" >
+
+				<div class="col-12 "> 
+					<div class="label-contaier ml-3">
+						<span class="text-success" > Diete </span>
+					</div>
+					
+					<div class="checkbox-container slide-option-container ml-3 "> 
+
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" id="GlutenFree" value="Gluten Free" name="diete" >
+							<label class="form-check-label text-info" for="GlutenFree"> Gluten Free </label>
+						</div>
+
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" id="Ketogenic" value="Ketogenic" name="diete" >
+							<label class="form-check-label text-info" for="Ketogenic"> Ketogenic </label>
+						</div>
+
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" id="Vegetarian" value="Vegetarian" name="diete" >
+							<label class="form-check-label text-info" for="Vegetarian"> Vegetarian </label>
+						</div>
+
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" id="Lacto-Vegetarian" value="Lacto-Vegetarian" name="diete" >
+							<label class="form-check-label text-info" for="Lacto-Vegetarian"> Lacto-Vegetarian </label>
+						</div>
+
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" id="Ovo-Vegetarian" value="Ovo-Vegetarian" name="diete" >
+							<label class="form-check-label text-info" for="Ovo-Vegetarian"> Ovo-Vegetarian </label>
+						</div>
+
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" id="Vegan" value="Vegan" name="diete" >
+							<label class="form-check-label text-info" for="Vegan"> Vegan </label>
+						</div>
+
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" id="Pescetarian" value="Pescetarian" name="diete" >
+							<label class="form-check-label text-info" for="Pescetarian"> Pescetarian </label>
+						</div>
+
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" id="Paleo" value="Paleo" name="diete" >
+							<label class="form-check-label text-info" for="Paleo"> Paleo </label>
+						</div>
+
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" id="Primal" value="Primal" name="diete" >
+							<label class="form-check-label text-info" for="Primal"> Primal </label>
+						</div>
+
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" id="Whole30" value="Whole30" name="diete" >
+							<label class="form-check-label text-info" for="Whole30"> Whole30 </label>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+
+			<div class="form-row orientimi-konteinerave ">
+				
+				<div class="label-contaier ml-3 ">
+					<span class="text-success"> Exclude Ingredients/Allergens  </span>
+				</div>
+
+				<div>
+					<textarea class="form-control ml-3" id="excludeIngredients" rows="5" cols="70"></textarea>
+				</div>
+
+
+			</div>
+
+			</form>
+		</div>	
+
+		<div class="container mt-auto bg-light mb-5 pb-3  ">
+			<div class="row align-items-end" >
+				<div class="col-sm-10 order-first">
+					
+				</div>
+				<div class="col-sm-1 order-last">
+					<button class="btn btn-primary" onclick="kerko()" > Search </button>
+				</div>
+				
+			</div>
+		</div>
+
+
+
+
+		<!-- Kontenieri ku vendeset artikulli -->
+		<div  id="recipeArticleContainer">
+
+
+		</div>
+
+
+
+
+		<!-- Kontenieri kuvendosen lista me receta -->
+		<div class="container" id="incomeDataContainer">
+
+			<p style="text-align: center;">
+				No Data Yet!
+			</p>
+
+		</div>
+
+
+		<!--  Footer 
+		<section class="cid-qv5ALrxDIE" id="footer5-3j" data-rv-view="8793">
+
+    -->
+
+			<div class=" bg-dark text-light ">
+				<div class="media-container-row">
+					<div class="col-md-3">
+						<div class="media-wrap">
+							<span> Recipe </span>
+						</div>
+					</div>
+					<div class="col-md-9">
+						<p class="mbr-text align-right links mbr-fonts-style display-7">
+							<a href="#" class="text-black">ABOUT</a> &nbsp;&nbsp;&nbsp;&nbsp;
+							<a href="#" class="text-black">TERMS</a> &nbsp;&nbsp;&nbsp;&nbsp;
+							<a href="#" class="text-black">CAREERS</a> &nbsp;&nbsp;&nbsp;&nbsp;
+							<a href="#" class="text-black">CONTACT</a>
+						</p>
+					</div>
+				</div>
+				<div class="footer-lower">
+					<div class="media-container-row">
+						<div class="col-md-12">
+							<hr class="bg-success">
+						</div>
+					</div>
+					<div class="media-container-row mbr-white">
+						<div class="col-md-6 copyright">
+							<p class="mbr-text mbr-fonts-style display-7">
+								© Copyright 2018 Footer Template- All Rights Reserved
+							</p>
+						</div>
+						<div class="col-md-6">
+							<div class="social-list align-right">
+								<div class="soc-item">
+									<a href="https://twitter.com/mobirise" target="_blank">
+										<span class="socicon-twitter socicon mbr-iconfont mbr-iconfont-social" media-simple="true"></span>
+									</a>
+								</div>
+								<div class="soc-item">
+									<a href="https://www.facebook.com/pages/Mobirise/1616226671953247" target="_blank">
+										<span class="socicon-facebook socicon mbr-iconfont mbr-iconfont-social" media-simple="true"></span>
+									</a>
+								</div>
+								<div class="soc-item">
+									<a href="https://www.youtube.com/c/mobirise" target="_blank">
+										<span class="socicon-youtube socicon mbr-iconfont mbr-iconfont-social" media-simple="true"></span>
+									</a>
+								</div>
+								<div class="soc-item">
+									<a href="https://instagram.com/mobirise" target="_blank">
+										<span class="socicon-instagram socicon mbr-iconfont mbr-iconfont-social" media-simple="true"></span>
+									</a>
+								</div>
+								<div class="soc-item">
+									<a href="https://plus.google.com/u/0/+Mobirise" target="_blank">
+										<span class="socicon-googleplus socicon mbr-iconfont mbr-iconfont-social" media-simple="true"></span>
+									</a>
+								</div>
+								<div class="soc-item">
+									<a href="https://www.behance.net/Mobirise" target="_blank">
+										<span class="socicon-behance socicon mbr-iconfont mbr-iconfont-social" media-simple="true"></span>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		
+		
+		
+		
+		<!--  </section> End  Footer -->
+
+
+
+		<script>
+			
+			/*
+			let calories;
+			let fat ;
+			let carbs ;
+			let protein ;
+			let saturatedFat ;
+			let cholesterol ;
+
+			let updateCaloriesInput = ( value ) => {
+				//console.log(value);
+				calories = value ;
+			}
+
+			let updateFatInput = ( value ) => {
+				//console.log(value);
+				fat = value ;
+			}
+
+			let updateCarbsInput = ( value ) => {
+				//console.log(value);
+				carbs = value ;
+			}
+
+			let updateProteinInput = ( value ) => {
+				//console.log(value);
+				protein = value ;
+			}
+
+			let updateSaturatedFatInput = ( value ) => {
+				//console.log(value);
+				saturatedFat = value ;
+			}
+
+			let updateCholesterolInput = ( value ) => {
+				//console.log(value);
+				cholesterol = value ;
+			}
+			*/
+
+			let makeRequestForData = ( secondPartQueru ) => {
+				
+				let apiKey = '&apiKey=10571ff725bb4b7ebd3c133b0ae48a19' ;
+				let firstPartQueru = 'https://api.spoonacular.com/mealplanner/generate?' ;
+
+				let fullQuery = firstPartQueru + secondPartQueru + apiKey ;
+
+				axios.get(fullQuery)
+				.then(function (res) {
+                    console.log(res.data);
+                    
+
+
+					let dataToShow = '' ;
+				
+					for( let data of res.data.meals ){
+
+						dataToShow = dataToShow + '<div class="card shadow " > <div class="row no-gutters">  ' ;  // <div class="col-sm-4">
+						// dataToShow = dataToShow + '<img class="img-fluid" src="' + data.sourceUrl + '" alt="..."> </div>' ;  
+						dataToShow = dataToShow + ' <div class="col-sm-12"> <div class="card-body">' ;
+						dataToShow = dataToShow + '<h5 class="card-title text-success">' + data.title + '</h5>';
+						dataToShow = dataToShow + '<p class="card-text">' +  data.readyInMinutes + '</p>';
+						
+						dataToShow = dataToShow + '<a href="' + data.sourceUrl + '" class="card-link" > Read food article </a>' ;
+						
+						dataToShow = dataToShow + '</div> </div> </div> </div>' ;
+                    }
+                    
+
+
+                    let nutrientsToShow = '' ;
+
+                    nutrientsToShow = nutrientsToShow + '<div class="container mb-5"> <div class="row"> <div class="col-12">  <ul class="list-group list-group-flush">' ;
+                    nutrientsToShow = nutrientsToShow + '<li class="list-group-item text-info"> ' + ' Calories : ' + res.data.nutrients.calories + 'KCal' + '</li>' ;
+                    nutrientsToShow = nutrientsToShow + '<li class="list-group-item text-info"> ' + 'Carbohydrates : ' + res.data.nutrients.carbohydrates + '' + '</li>' ;
+                    nutrientsToShow = nutrientsToShow + '<li class="list-group-item text-info"> ' + 'Fat : ' + res.data.nutrients.fat + '' + '</li>' ;
+                    nutrientsToShow = nutrientsToShow + '<li class="list-group-item text-info"> ' + 'Protein : ' + res.data.nutrients.protein + '' + '</li>' ;
+                    
+
+                    document.querySelector('#recipeArticleContainer').innerHTML  = nutrientsToShow ;
+					document.querySelector('#incomeDataContainer').innerHTML  = dataToShow ;
+
+				})
+				.catch(function (error) {
+					// handle error
+					console.log(error);
+				}) ;
+
+			}
+
+
+
+			let kerko = () => {
+
+				// ska mbaruar 
+				// Duhen bere me query selector dhe jo me jquery
+				var diete = $('input[name=diete]:checked').val();
+
+
+				let timeFrame = document.querySelector('#timeFrame').value.trim() ;
+				let targetCalories = document.querySelector('#targetCalories').value ;
+
+				let excludeIngredients = document.querySelector('#excludeIngredients').value.trim() ;
+
+
+				let secondPartQueru = '' ;
+
+				if( diete == null ){
+					secondPartQueru = secondPartQueru.replace( '&diet=', '' ) ;
+				}else{
+					secondPartQueru = secondPartQueru + '&diet=' + diete ;
+				}
+
+				if( timeFrame != '' ){
+					secondPartQueru = secondPartQueru + '&timeFrame=' + timeFrame ;
+				}
+
+				if( targetCalories != '' ){
+					secondPartQueru = secondPartQueru + '&targetCalories=' + targetCalories ;
+				}
+
+
+				if( excludeIngredients != '' ){
+					secondPartQueru = secondPartQueru + '&exclude=' + excludeIngredients ;
+                }
+                
+ 
+				secondPartQueru = secondPartQueru.replace('&', '');
+
+				makeRequestForData(secondPartQueru);
+				
+			}
+
+
+		</script>
+		
+
+    </body>
+</html>

@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<title> Food website </title>
+		
+		<style>
+			html, body{
+				margin: 0px;
+				padding: 0px;
+			}
+
+			html{
+				height: 100%;
+			}
+
+			body{
+				height: auto;
+			}
+
+			label.form-check-label {
+    			font-size: large;
+			}
+
+			.checkbox-container {
+				display: flex;
+				flex-direction: row;
+				overflow-y: auto;
+				overflow-x: scroll;
+				width: inherit;
+
+				/*
+					min-width: 576px;
+					max-width: 576;
+				*/
+				
+			}
+
+			.form-check.form-check-inline {
+				margin-left: 2%;
+			}
+
+			.form-row {
+				width: 100%;
+				margin-bottom: 5%;
+			}
+
+			.orientimi-konteinerave{
+				display: flex;
+				flex-direction: column;
+			}
+
+			.img-fluid {
+				max-width: 100%;
+				height: 100% !important;;
+				/*height: fit-content !important;*/
+			}
+
+			.card {
+				margin-bottom: 5%;
+			}
+
+			li.list-group-item {
+				color: black;
+			}
+
+			.mydivider{
+				width: 90%;
+			}
+
+			.extra-info{
+				display: flex;
+				flex-direction: row !important;
+				
+			}
+
+			.my-li-item{
+				border: 0px !important;
+			}
+
+
+			::placeholder {
+				color: #28a745!important;
+				opacity: 1; /* Firefox */
+			}
+
+			:-ms-input-placeholder { /* Internet Explorer 10-11 */
+				color: #28a745!important;
+			}
+
+			::-ms-input-placeholder { /* Microsoft Edge */
+				color: #28a745!important;
+			}
+
+			/* 
+			.slide-option-container{
+				width: 90%;
+			}
+			*/
+
+
+			/*
+				media query per 
+				screen width less than 576px
+			*/
+
+		</style>
+
+  
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+			
+
+  	</head>
+    <body >
+
+		<!-- fillon navbar -->
+		<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+			<a class="navbar-brand" href="#">Navbar</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+			  <span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="collapsibleNavbar">
+			  <ul class="navbar-nav">
+
+				<li class="nav-item">
+					<a class="nav-link" href="winerecomandation.html"> Wine Recomandation </a>
+				  </li>
+				  <li class="nav-item">
+					<a class="nav-link" href="mealplangenerator.html"> Generate Meal Plan </a>
+				  </li>
+				  <li class="nav-item">
+					<a class="nav-link" href="index.html"> Home </a>
+				  </li>    
+				  <li class="nav-item">
+					  <a class="nav-link" href="fooddatagenerator.html"> Generate Food Data </a>
+				  </li> 
+				  <li class="nav-item">
+					  <a class="nav-link" href="coctailgenerator.html"> Generate Coctail </a>
+				  </li> 
+					<li class="nav-item">
+					  <a class="nav-link" href="about.html"> About </a>
+				  </li>  
+
+			  </ul>
+			</div>  
+		</nav>
+
+		<!-- mbaron navbar -->
+
+
+
+		<h1 class="display-1 text-center text-warning pt-5 pb-5 " > Food Data  </h1>
+		
+
+
+		<div class="container bg-light pt-5 pb-3 ">
+			<form class="form-inline">
+
+			<div class="form-row" >
+				<div class="col-sm-5 col-12 mb-1 ml-3 " >
+					<div class="form-group">
+						<input type="text" class="form-control-range" id="query" placeholder="Pjese te titullit apo ingridenteve" >
+					</div>
+				</div>
+
+				<div class="col-sm-5 col-12 ml-3 " >
+					<div class="form-group">
+						<input type="number" class="form-control-range" id="maxReadyTime" placeholder="maxReadyTime" >
+					</div>
+				</div>
+
+			</div>
+
+			<div class="form-row" >
+
+				<div class="col-sm col-12 ml-3 " >
+					<div class="form-group">
+						<label class="text-success" for="Calories"> Carbs </label>
+						<input type="range" class="form-control-range" id="Calories" min="0" max="100" onchange="updateCarbsInput(this.value)" >
+					</div>
+				</div>
+
+				<div class="col-sm col-12 ml-3 " >
+					<div class="form-group">
+						<label class="text-success" for="Calories"> Protein </label>
+						<input type="range" class="form-control-range" id="Calories" min="0" max="100" onchange="updateProteinInput(this.value)" >
+					</div>
+				</div>
+
+			</div>
+
+
+			<div class="form-row" >
+
+
+				<div class="col-sm col-12 ml-3 " >
+					<div class="form-group">
+						<label class="text-success" for="Calories"> Calories </label>
+						<input type="range" class="form-control-range" id="Calories" min="0" max="100" onchange="updateCaloriesInput(this.value)" >
+					</div>
+				</div>
+
+
+				<div class="col-sm col-12 ml-3 " >
+					<div class="form-group">
+						<label class="text-success" for="Fat"> Fat </label>
+						<input type="range" class="form-control-range" id="Fat" min="0" max="100" onchange="updateFatInput(this.value)" >
+					</div>
+				</div>
+
+
+			</div>
+
+
+			<div class="form-row" >
+
+
+				<div class="col-sm col-12 ml-3 " >
+					<div class="form-group">
+						<label class="text-success" for="Calories"> Cholesterol </label>
+						<input type="range" class="form-control-range" id="Calories" min="0" max="100" onchange="updateCholesterolInput(this.value)" >
+					</div>
+				</div>
+
+				<div class="col-sm col-12 ml-3 " >
+					<div class="form-group">
+						<label class="text-success" for="Calories"> SaturatedFat </label>
+						<input type="range" class="form-control-range" id="Calories" min="0" max="100" onchange="updateSaturatedFatInput(this.value)" >
+					</div>
+				</div>
+
+			</div>
+
+
+			<div class="form-row" >
+
+
+
+				<div class="col-sm col-12 mb-4 ml-3 ">
+					<input type="number" class="form-control" id="maxVitaminA" placeholder="maxVitaminA">
+				</div>
+
+				<div class="col-sm col-12 mb-4 ml-3 ">
+					<input type="number" class="form-control" id="maxVitaminD" placeholder="maxVitaminD">
+				</div>
+
+
+				<div class="col-sm col-12 mb-4 ml-3 ">
+					<input type="number" class="form-control" id="maxVitaminE" placeholder="maxVitaminE">
+				</div>
+
+				<div class="col-sm col-12 mb-4 ml-3 ">
+					<input type="number" class="form-control" id="maxVitaminC" placeholder="maxVitaminC">
+				</div>
+
+				<div class="col-sm col-12 mb-4 ml-3 ">
+					<input type="number" class="form-control" id="maxVitaminK" placeholder="maxVitaminK">
+				</div>
+
+			</div>
+
+
+
+			<div class="form-row" >
+
+				<div class="col-sm col-12 mb-4 ml-3 ">
+					<input type="number" class="form-control" id="maxVitaminB1" placeholder="maxVitaminB1">
+				</div>
+
+				<div class="col-sm col-12 mb-4 ml-3 ">
+					<input type="number" class="form-control" id="maxVitaminB2" placeholder="maxVitaminB2">
+				</div>
+
+				<div class="col-sm col-12 mb-4 ml-3 ">
+					<input type="number" class="form-control" id="maxVitaminB5" placeholder="maxVitaminB5">
+				</div>
+
+				<div class="col-sm col-12 mb-4 ml-3 ">
+					<input type="number" class="form-control" id="maxVitaminB3" placeholder="maxVitaminB3">
+				</div>
+
+				<div class="col-sm col-12 mb-4 ml-3 ">
+					<input type="number" class="form-control" id="maxVitaminB6" placeholder="maxVitaminB6">
+				</div>
+
+
+			</div>
+
+
+			<div class="form-row" >
+
+				<div class="col-sm col-12 mb-4 ml-3 ">
+					<input type="number" class="form-control" id="maxVitaminB12" placeholder="maxVitaminB12">
+				</div>
+
+				<div class="col-sm col-12 mb-4 ml-3 ">
+					<input type="number" class="form-control" id="maxFiber" placeholder="maxFiber">
+				</div>
+
+				<div class="col-sm col-12 mb-4 ml-3 ">
+					<input type="number" class="form-control" id="maxSugar" placeholder="maxSugar">
+				</div>
+
+			</div>
+
+			<div class="form-row orientimi-konteinerave" >
+
+				<div class="col-12">
+
+					<div class="label-contaier mb-4 ml-3 ">
+						<span class="text-success" > Cuisine </span>
+					</div>
+					
+					<div class="checkbox-container slide-option-container ">
+						
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" id="African" value="African" name="cuisine" >
+							<label class="form-check-label text-info" for="African"> African </label>
+						</div>
+
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" id="American" value="American" name="cuisine" >
+							<label class="form-check-label text-info" for="American"> American </label>
+						</div>
+
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" id="British" value="British" name="cuisine" >
+							<label class="form-check-label text-info" for="British"> British </label>
+						</div>
+
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" id="Caribbean" value="Caribbean" name="cuisine" >
+							<label class="form-check-label text-info" for="Caribbean"> Caribbean </label>
+						</div>
+
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" id="Chinese" value="Chinese" name="cuisine" >
+							<label class="form-check-label text-info" for="Chinese"> Chinese </label>
+						</div>
+
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" id="French" value="French" name="cuisine" >
+							<label class="form-check-label text-info" for="French"> French </label>
+						</div>
+
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" id="Greek" value="Greek" name="cuisine" >
+							<label class="form-check-label text-info" for="Greek"> Greek </label>
+						</div>
+
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" id="Indian" value="Indian" name="cuisine" >
+							<label class="form-check-label text-info" for="Indian"> Indian </label>
+						</div>
+
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" id="Italian" value="Italian" name="cuisine" >
+							<label class="form-check-label text-info" for="Italian"> Italian </label>
+						</div>
+
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" id="Japanese" value="Japanese" name="cuisine" >
+							<label class="form-check-label text-info" for="Japanese"> Japanese </label>
+						</div>
+
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" id="Jewish" value="Jewish" name="cuisine" >
+							<label class="form-check-label text-info" for="Jewish"> Jewish </label>
+						</div>
+
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" id="LatinAmerican" value="Latin American" name="cuisine" >
+							<label class="form-check-label text-info" for="LatinAmerican"> Latin American </label>
+						</div>
+
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" id="Mediterranean" value="Mediterranean" name="cuisine" >
+							<label class="form-check-label text-info" for="Mediterranean"> Mediterranean </label>
+						</div>
+
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" id="Mexican" value="Mexican" name="cuisine" >
+							<label class="form-check-label text-info" for="Mexican"> Mexican </label>
+						</div>
+
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" id="Spanish" value="Spanish" name="cuisine" >
+							<label class="form-check-label text-info" for="Spanish"> Spanish </label>
+						</div>
+
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" id="MiddleEastern" value="Middle Eastern" name="cuisine" >
+							<label class="form-check-label text-info" for="MiddleEastern"> Middle Eastern </label>
+						</div>
+
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" id="European" value="European" name="cuisine" >
+							<label class="form-check-label text-info" for="European"> European </label>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+			<div class="form-row orientimi-konteinerave" >
+
+				<div class="col-12"> 
+					<div class="label-contaier ml-3 ">
+						<span class="text-success" > Diete </span>
+					</div>
+					
+					<div class="checkbox-container slide-option-container"> 
+
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" id="GlutenFree" value="Gluten Free" name="diete" >
+							<label class="form-check-label text-info" for="GlutenFree"> Gluten Free </label>
+						</div>
+
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" id="Ketogenic" value="Ketogenic" name="diete" >
+							<label class="form-check-label text-info" for="Ketogenic"> Ketogenic </label>
+						</div>
+
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" id="Vegetarian" value="Vegetarian" name="diete" >
+							<label class="form-check-label text-info" for="Vegetarian"> Vegetarian </label>
+						</div>
+
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" id="Lacto-Vegetarian" value="Lacto-Vegetarian" name="diete" >
+							<label class="form-check-label text-info" for="Lacto-Vegetarian"> Lacto-Vegetarian </label>
+						</div>
+
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" id="Ovo-Vegetarian" value="Ovo-Vegetarian" name="diete" >
+							<label class="form-check-label text-info" for="Ovo-Vegetarian"> Ovo-Vegetarian </label>
+						</div>
+
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" id="Vegan" value="Vegan" name="diete" >
+							<label class="form-check-label text-info" for="Vegan"> Vegan </label>
+						</div>
+
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" id="Pescetarian" value="Pescetarian" name="diete" >
+							<label class="form-check-label text-info" for="Pescetarian"> Pescetarian </label>
+						</div>
+
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" id="Paleo" value="Paleo" name="diete" >
+							<label class="form-check-label text-info" for="Paleo"> Paleo </label>
+						</div>
+
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" id="Primal" value="Primal" name="diete" >
+							<label class="form-check-label text-info" for="Primal"> Primal </label>
+						</div>
+
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" id="Whole30" value="Whole30" name="diete" >
+							<label class="form-check-label text-info" for="Whole30"> Whole30 </label>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+			<div class="form-row orientimi-konteinerave" >
+
+				<div class="col-12">
+
+					
+					<div class=" label-contaier ml-3">
+						<span class="text-success" > Intolerances </span>
+					</div>
+					
+					<div class=" checkbox-container slide-option-container">  
+
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" id="Dairy" value="Dairy" name="intolerances" >
+							<label class="form-check-label text-info" for="Dairy"> Dairy </label>
+						</div>
+
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" id="Egg" value="Egg" name="intolerances" >
+							<label class="form-check-label text-info" for="Egg"> Egg </label>
+						</div>
+
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" id="Gluten" value="Gluten" name="intolerances" >
+							<label class="form-check-label text-info" for="Gluten"> Gluten </label>
+						</div>
+
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" id="Grain" value="Grain" name="intolerances" >
+							<label class="form-check-label text-info" for="Grain"> Grain </label>
+						</div>
+
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" id="Peanut" value="Peanut" name="intolerances" >
+							<label class="form-check-label text-info" for="Peanut"> Peanut </label>
+						</div>
+
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" id="Seafood" value="Seafood" name="intolerances" >
+							<label class="form-check-label text-info" for="Seafood"> Seafood </label>
+						</div>
+
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" id="Sesame" value="Sesame" name="intolerances" >
+							<label class="form-check-label text-info" for="Sesame"> Sesame </label>
+						</div>
+
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" id="Shellfish" value="Shellfish" name="intolerances" >
+							<label class="form-check-label text-info" for="Shellfish"> Shellfish </label>
+						</div>
+
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" id="Soy" value="Soy" name="intolerances" >
+							<label class="form-check-label text-info" for="Soy"> Soy </label>
+						</div>
+
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" id="Sulfite" value="Sulfite" name="intolerances" >
+							<label class="form-check-label text-info" for="Sulfite"> Sulfite </label>
+						</div>
+
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" id="TreeNut" value="Tree Nut" name="intolerances" >
+							<label class="form-check-label text-info" for="TreeNut"> Tree Nut </label>
+						</div>
+
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" id="Wheat" value="Wheat" name="intolerances" >
+							<label class="form-check-label text-info" for="Wheat"> Wheat </label>
+						</div>
+
+					</div>
+				</div>
+
+			</div>
+
+			<div class="form-row orientimi-konteinerave" >
+
+				<div class="label-contaier ml-3 ">
+					<span class="text-success" > Type of Dish </span>
+				</div>
+
+
+				<div class=" checkbox-container slide-option-container">  
+
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="radio" id="maincourse" value="main course" name="dish" >
+						<label class="form-check-label text-info" for="maincourse"> main course </label>
+					</div>
+
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="radio" id="sidedish" value="side dish" name="dish" >
+						<label class="form-check-label text-info" for="sidedish"> side dish </label>
+					</div>
+
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="radio" id="dessert" value="dessert" name="dish" >
+						<label class="form-check-label text-info" for="dessert"> dessert </label>
+					</div>
+
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="radio" id="appetizer" value="appetizer" name="dish" >
+						<label class="form-check-label text-info" for="appetizer"> appetizer </label>
+					</div>
+
+
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="radio" id="salad" value="salad" name="dish" >
+						<label class="form-check-label text-info" for="salad"> salad </label>
+					</div>
+
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="radio" id="bread" value="bread" name="dish" >
+						<label class="form-check-label text-info" for="bread"> bread </label>
+					</div>
+
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="radio" id="breakfast" value="breakfast" name="dish" >
+						<label class="form-check-label text-info" for="breakfast"> breakfast </label>
+					</div>
+
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="radio" id="soup" value="soup" name="dish" >
+						<label class="form-check-label text-info" for="soup"> soup </label>
+					</div>
+
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="radio" id="beverage" value="beverage" name="dish" >
+						<label class="form-check-label text-info" for="beverage"> beverage </label>
+					</div>
+
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="radio" id="sauce" value="sauce" name="dish" >
+						<label class="form-check-label text-info" for="sauce"> sauce </label>
+					</div>
+
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="radio" id="marinade" value="marinade" name="dish" >
+						<label class="form-check-label text-info" for="marinade"> marinade </label>
+					</div>
+
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="radio" id="fingerfood" value="fingerfood" name="dish" >
+						<label class="form-check-label text-info" for="fingerfood"> fingerfood </label>
+					</div>
+
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="radio" id="snack" value="snack" name="dish" >
+						<label class="form-check-label text-info" for="snack"> snack </label>
+					</div>
+
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="radio" id="drink" value="drink" name="dish" >
+						<label class="form-check-label text-info" for="drink"> drink </label>
+					</div>
+
+				</div>
+
+			</div>
+
+			<div class="form-row orientimi-konteinerave ">
+				
+				<div class="label-contaier ml-3 ">
+					<span class="text-success"> Include Ingredients </span>
+				</div>
+
+				<div>
+					<textarea class="form-control ml-3" id="includeIngredients" rows="5" cols="70"></textarea>
+				</div>
+
+
+			</div>
+
+			</form>
+		</div>	
+
+		<div class="container mt-auto mb-5 bg-light ">
+			<div class="row align-items-end" >
+				<div class="col-sm-10 order-first">
+					
+				</div>
+				<div class="col-sm-1 order-last">
+					<button class="btn btn-primary mb-3 " onclick="kerko()" > Search </button>
+				</div>
+				
+			</div>
+		</div>
+
+
+
+
+		<!-- Kontenieri ku vendeset artikulli
+		<div  id="recipeArticleContainer">
+		</div>
+ 		-->
+
+
+		<!-- Kontenieri kuvendosen lista me receta -->
+		<div class="container" id="incomeDataContainer">
+
+			<p style="text-align: center;">
+				No Data Yet!
+			</p>
+
+		</div>
+
+
+		<!--  Footer 
+		<section class="cid-qv5ALrxDIE" id="footer5-3j" data-rv-view="8793">
+
+    -->
+
+    
+
+			<div class=" bg-dark text-light ">
+				<div class="media-container-row">
+					<div class="col-md-3">
+						<div class="media-wrap">
+							<span> Recipe </span>
+						</div>
+					</div>
+					<div class="col-md-9">
+						<p class="mbr-text align-right links mbr-fonts-style display-7">
+							<a href="#" class="text-black">ABOUT</a> &nbsp;&nbsp;&nbsp;&nbsp;
+							<a href="#" class="text-black">TERMS</a> &nbsp;&nbsp;&nbsp;&nbsp;
+							<a href="#" class="text-black">CAREERS</a> &nbsp;&nbsp;&nbsp;&nbsp;
+							<a href="#" class="text-black">CONTACT</a>
+						</p>
+					</div>
+				</div>
+				<div class="footer-lower">
+					<div class="media-container-row">
+						<div class="col-md-12">
+							<hr class="bg-success">
+						</div>
+					</div>
+					<div class="media-container-row mbr-white">
+						<div class="col-md-6 copyright">
+							<p class="mbr-text mbr-fonts-style display-7">
+								© Copyright 2018 Footer Template- All Rights Reserved
+							</p>
+						</div>
+						<div class="col-md-6">
+							<div class="social-list align-right">
+								<div class="soc-item">
+									<a href="https://twitter.com/mobirise" target="_blank">
+										<span class="socicon-twitter socicon mbr-iconfont mbr-iconfont-social" media-simple="true"></span>
+									</a>
+								</div>
+								<div class="soc-item">
+									<a href="https://www.facebook.com/pages/Mobirise/1616226671953247" target="_blank">
+										<span class="socicon-facebook socicon mbr-iconfont mbr-iconfont-social" media-simple="true"></span>
+									</a>
+								</div>
+								<div class="soc-item">
+									<a href="https://www.youtube.com/c/mobirise" target="_blank">
+										<span class="socicon-youtube socicon mbr-iconfont mbr-iconfont-social" media-simple="true"></span>
+									</a>
+								</div>
+								<div class="soc-item">
+									<a href="https://instagram.com/mobirise" target="_blank">
+										<span class="socicon-instagram socicon mbr-iconfont mbr-iconfont-social" media-simple="true"></span>
+									</a>
+								</div>
+								<div class="soc-item">
+									<a href="https://plus.google.com/u/0/+Mobirise" target="_blank">
+										<span class="socicon-googleplus socicon mbr-iconfont mbr-iconfont-social" media-simple="true"></span>
+									</a>
+								</div>
+								<div class="soc-item">
+									<a href="https://www.behance.net/Mobirise" target="_blank">
+										<span class="socicon-behance socicon mbr-iconfont mbr-iconfont-social" media-simple="true"></span>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		
+		
+		
+		
+		<!--  </section> End  Footer -->
+
+
+
+		<script>
+
+			let calories;
+			let fat ;
+			let carbs ;
+			let protein ;
+			let saturatedFat ;
+			let cholesterol ;
+
+			let updateCaloriesInput = ( value ) => {
+				//console.log(value);
+				calories = value ;
+			}
+
+			let updateFatInput = ( value ) => {
+				//console.log(value);
+				fat = value ;
+			}
+
+			let updateCarbsInput = ( value ) => {
+				//console.log(value);
+				carbs = value ;
+			}
+
+			let updateProteinInput = ( value ) => {
+				//console.log(value);
+				protein = value ;
+			}
+
+			let updateSaturatedFatInput = ( value ) => {
+				//console.log(value);
+				saturatedFat = value ;
+			}
+
+			let updateCholesterolInput = ( value ) => {
+				//console.log(value);
+				cholesterol = value ;
+			}
+
+
+			let makeRequestForData = ( secondPartQueru ) => {
+				// number = 100  
+
+				let apiKey = '&apiKey=10571ff725bb4b7ebd3c133b0ae48a19' ;
+				let firstPartQueru = 'https://api.spoonacular.com/recipes/complexSearch?' ;
+
+				secondPartQueru = secondPartQueru + '&addRecipeInformation=true';
+
+				let fullQuery = firstPartQueru + secondPartQueru + apiKey ;
+
+				axios.get(fullQuery)
+				.then(function (res) {
+					console.log(res.data.results);
+
+					let dataToShow = '' ;
+				
+					for( let data of res.data.results ){
+
+						dataToShow = dataToShow + '<div class="card shadow " > <div class="row no-gutters"> <div class="col-sm-4"> ' ;
+						dataToShow = dataToShow + '<img class="img-fluid" src="' + data.image + '" alt="...">' ;
+						dataToShow = dataToShow + '</div> <div class="col-sm-8"> <div class="card-body">' ;
+						dataToShow = dataToShow + '<h5 class="card-title">' + data.title + '</h5>';
+						dataToShow = dataToShow + '<p class="card-text">' +  data.summary + '</p>';
+						
+						dataToShow = dataToShow + '<a href="#" class="card-link" onclick="singleRecipe(' +  data.id + ')" > Recipe </a>' ;
+						
+						dataToShow = dataToShow + '</div> </div> </div> </div>' ;
+					}
+
+					document.querySelector('#incomeDataContainer').innerHTML  = dataToShow ;
+
+				})
+				.catch(function (error) {
+					// handle error
+					console.log(error);
+				}) ;
+
+			}
+
+
+
+			let kerko = () => {
+				// ska mbaruar 
+				let vitB1 = document.querySelector('#maxVitaminB1').value ;
+				let vitB2 = document.querySelector('#maxVitaminB2').value ;
+				let vitB5 = document.querySelector('#maxVitaminB5').value ;
+				let vitB3 = document.querySelector('#maxVitaminB3').value ;
+				let vitB6 = document.querySelector('#maxVitaminB6').value ;
+				let vitB12 = document.querySelector('#maxVitaminB12').value ;
+				let fiber = document.querySelector('#maxFiber').value ;
+				let sugar = document.querySelector('#maxSugar').value ;
+
+				let VitA = document.querySelector('#maxVitaminA').value ;
+				let VitD = document.querySelector('#maxVitaminD').value ;
+
+				let query = document.querySelector('#query').value ;
+				let maxReadyTime = document.querySelector('#maxReadyTime').value ;
+
+				let includeIngredients = document.querySelector('#includeIngredients').value ;
+
+				// Duhen bere me query selector dhe jo me jquery
+				var intolerances = $('input[name=intolerances]:checked').val();
+				var diete = $('input[name=diete]:checked').val();
+				var cuisine = $('input[name=cuisine]:checked').val();
+				var dish = $('input[name=dish]:checked').val();
+
+
+				let secondPartQueru = '' ;
+
+				if( dish == null ){
+					secondPartQueru = secondPartQueru.replace( '&type=', '' )  ;
+				}else{
+					secondPartQueru = secondPartQueru + '&type=' + dish ;
+				}
+
+				if( cuisine == null ){
+					secondPartQueru = secondPartQueru.replace( '&cuisine=', '' )  ;
+				}else{
+					secondPartQueru = secondPartQueru + '&cuisine=' + cuisine ;
+				}
+
+				if( diete == null ){
+					secondPartQueru = secondPartQueru.replace( '&diet=', '' ) ;
+				}else{
+					secondPartQueru = secondPartQueru + '&diet=' + diete ;
+				}
+
+				if( intolerances == null ){
+					secondPartQueru = secondPartQueru.replace('&intolerances=', '' ) ;
+				}else{
+					secondPartQueru = secondPartQueru + '&intolerances=' + intolerances ;
+				}
+
+				if(  VitA != '' ){
+					secondPartQueru = secondPartQueru + '&maxVitaminA=' + VitA ;
+				}
+
+				if( VitD != '' ){
+					secondPartQueru = secondPartQueru + '&maxVitaminD=' + VitD ;
+				}
+
+				if( query != '' ){
+					secondPartQueru = secondPartQueru + '&query=' + query ;
+				}
+
+				if( maxReadyTime != '' ){
+					secondPartQueru = secondPartQueru + '&maxReadyTime=' + maxReadyTime ;
+				}
+
+
+				if( vitB1 != '' ){
+					secondPartQueru = secondPartQueru + '&maxVitaminB1=' + vitB1 ;
+				}
+
+				if( vitB2 != '' ){
+					secondPartQueru = secondPartQueru + '&maxVitaminB2=' + vitB2 ;
+				}
+
+				if( vitB5 != '' ){
+					secondPartQueru = secondPartQueru + '&maxVitaminB5=' + vitB5 ;
+				}
+
+				if( vitB3 != '' ){
+					secondPartQueru = secondPartQueru + '&maxVitaminB3=' + vitB3 ;
+				}
+
+				if( vitB6 != '' ){
+					secondPartQueru = secondPartQueru + '&maxVitaminB6=' + vitB6 ;
+				}
+
+				if( vitB12 != '' ){
+					secondPartQueru = secondPartQueru + '&maxVitaminB12=' + vitB12 ;
+				}
+
+				if( fiber != '' ){
+					secondPartQueru = secondPartQueru + '&maxFiber=' + fiber ;
+				}
+
+				if( sugar != '' ){
+					secondPartQueru = secondPartQueru + '&maxSugar=' + sugar ;
+				}
+
+				if( includeIngredients != '' ){
+					secondPartQueru = secondPartQueru + '&includeIngredients=' + includeIngredients ;
+				}
+ 
+				secondPartQueru = secondPartQueru.replace('&', '');
+
+				makeRequestForData(secondPartQueru);
+				
+			}
+
+
+			let singleRecipe = ( id ) =>{
+				// ska mbaruar
+
+				window.localStorage.removeItem("recipeid");
+				window.localStorage.setItem("recipeid", id );
+				// Redirecting to new page
+				// window.location.href = "file:///C:/Users/user/Desktop/food-website/fooddata.html";
+				window.location.href = "fooddata.html";
+
+
+				/*
+
+				let apiKey = 'apiKey=10571ff725bb4b7ebd3c133b0ae48a19' ;
+				let firstPartQueru = 'https://api.spoonacular.com/recipes/' + id + '/information?' ;
+
+				let fullQuery = firstPartQueru + apiKey ;
+
+				axios.get(fullQuery)
+				.then(function (res) {
+					console.log(res.data);
+
+
+
+					let resData = '' ;
+
+					resData = resData + '<div class="row"> <div class="col-sm-8 col-12"> ' ;
+					resData = resData + '<img class="img-fluid" src="' + res.data.image + '" alt="...">' ;
+					resData = resData + '</div> <div class="col-sm-4 col-12"> <ul class="list-group list-group-flush"> ' ;
+
+
+					for( let perberes of res.data.extendedIngredients ){
+						resData = resData + '<li class="list-group-item text-info">' + perberes.originalName + ', ' + perberes.amount + ' ' + perberes.measures.metric.unitLong + '</li>' ;
+					}
+
+					resData = resData + '</ul> </div> </div> <div class="row"> <div class="col-sm-8 col-12">  ' ;
+					resData = resData + '<h1 class="text-success">' + res.data.title + '</h1>';
+					resData = resData + '<div class="container"> <p class="text-start fs-3" >';
+					resData = resData + res.data.instructions ;
+					resData = resData + '</p> </div> <hr class="bg-danger mydivider"/> <div class="container" > <div class="row gy-5"> <div class=" col-sm col "> ' ;
+					resData = resData + '<ul class="list-group list-group-flush extra-info"> <li class="list-group-item text-info"> ' ;
+					resData = resData + 'is gluten free : ' + res.data.glutenFree + '</li>';
+					resData = resData + '<li class="list-group-item text-warning my-li-item"> is vegan : ' + res.data.vegan + '</li>' ;
+					resData = resData + '<li class="list-group-item text-warning my-li-item"> is vegetarian : ' + res.data.vegetarian  + '</li>' ;
+					resData = resData + '<li class="list-group-item text-warning my-li-item"> Price Per Serving : ' + res.data.pricePerServing + '</li>' ;
+					resData = resData + '<li class="list-group-item text-warning my-li-item">  Ready For : ' + res.data.readyInMinutes + ' Minutes </li>' ;
+					resData = resData + '<li class="list-group-item text-warning my-li-item">  <a class="nav-link text-center" aria-current="page" href="' + res.data.sourceUrl + '"> Read article </a>  </li>' ;
+					resData = resData + '</ul> </div> </div> </div> </div>' ;
+
+
+					resData = resData + ' <div class="col-4"> <ul class="list-group list-group-flush">' ;
+
+					for(let pjata of res.data.dishTypes ){
+						// console.log( 'pjata : ' , pjata );
+						resData = resData + '<li class="list-group-item text-info">' + pjata + '</li>' ;
+					}	
+
+					resData = resData + ' </ul> </div> ' ;
+
+					document.querySelector('#recipeArticleContainer').innerHTML  = resData ;
+
+				})
+				.catch(function (error) {
+					// handle error
+					console.log(error);
+				}) ;
+
+				*/
+
+			}
+
+
+		</script>
+		
+
+    </body>
+</html>
